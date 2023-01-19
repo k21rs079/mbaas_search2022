@@ -17,34 +17,43 @@
 
         function fetchAll() {
             let TestDataClass = ncmb.DataStore(db);
-            TestDataClass.order("name", false).fetchAll()
+            TestDataClass.order("fetchAll", false).fetchAll()
                 .then(function(results) {
                     showResults(results);
                 })
         }
 
         function searchName() {
-            let name = $("#group").val();
+            let input = $("#group").val();
             let TestDataClass = ncmb.DataStore(db);
-            TestDataClass.order("group", false).fetchAll()
+            TestDataClass.regularExpressionTo("group", input).fetchAll()
                 .then(function(results) {
                     showResults(results);
                 })
         }
 
         function searchLevel() {
-            let level = parseInt($("#level").val());
+            let input = parseInt($("#rank").val());
             let TestDataClass = ncmb.DataStore(db);
-            TestDataClass.equalTo("level", level).fetchAll()
+            TestDataClass.equalTo("rank", input).fetchAll()
                 .then(function(results) {
                     showResults(results);
                 })
         }
 
         function searchLevelLT() {
-            let age = parseInt($("#age").val());
+            let input = parseInt($("#age").val());
             let TestDataClass = ncmb.DataStore(db);
-            TestDataClass.order("age", false).fetchAll()
+            TestDataClass.equalTo("age", input).fetchAll()
+                .then(function(results) {
+                    showResults(results);
+                })
+        }
+
+        function searchName2() {
+            let input = $("#name").val();
+            let TestDataClass = ncmb.DataStore(db);
+            TestDataClass.regularExpressionTo("name", input).fetchAll()
                 .then(function(results) {
                     showResults(results);
                 })
@@ -56,7 +65,7 @@
             for (let i = 0; i < results.length; i++) {
                 // 各データを収めた表の列を生成
                 msg += "<tr>";
-                msg += "<td>" + results[i].name + "</td>";
+                msg += "<td class='num'>" + results[i].name + "</td>";
                 msg += "<td class='num'>" + results[i].group + "</td>";
                 msg += "<td class='num'>" + results[i].rank + "</td>";
                 msg += "<td class='num'>" + results[i].age + "</td>";
@@ -72,16 +81,20 @@
 <body>
     <h1>mBaaS search</h1>
     <div>
-        <label for="name">name:</label>
-        <input id="name" type="text" placeholder="name">
+        <label for="group">group:</label>
+        <input id="group" type="text" placeholder=" group">
     </div>
     <div>
-        <label for="level">level:</label>
-        <input id="level" type="number" placeholder="level">
+        <label for="rank">rank:</label>
+        <input id="rank" type="number" placeholder="rank">
     </div>
      <div>
         <label for="age">age:</label>
         <input id="age" type="number" placeholder="age">
+    </div>
+    <div>
+        <label for="name">name:</label>
+        <input id="name" type="text" placeholder="name">
     </div>
     <div id="button">
         <button class="btn" onclick="fetchAll()">推し</button>
@@ -89,6 +102,7 @@
         <button class="btn" onclick="searchLevel()">順位</button>
         <br>
         <button class="btn" onclick="searchLevelLT()">年齢</button>
+        <button class="btn" onclick="searchName2()">名前</button>
 
     </div>
     <div id="message">message area</div>
