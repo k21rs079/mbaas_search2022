@@ -24,9 +24,9 @@
         }
 
         function searchName() {
-            let name = $("#name").val();
+            let name = $("#group").val();
             let TestDataClass = ncmb.DataStore(db);
-            TestDataClass.equalTo("name", name).fetchAll()
+            TestDataClass.order("group", false).fetchAll()
                 .then(function(results) {
                     showResults(results);
                 })
